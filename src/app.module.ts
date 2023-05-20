@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { NoContentInterceptor } from './interceptors/transform.interceptor';
 import { TemperatureModule } from './temperature/temperature.module';
+import { EventsBrokerModule } from './eventsBroker/eventsBroker.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { TemperatureModule } from './temperature/temperature.module';
     }),
     TemperatureModule,
     UsersModule,
+    EventsBrokerModule
   ],
   controllers: [AppController],
   providers: [
