@@ -11,13 +11,18 @@ import { NoContentInterceptor } from './interceptors/transform.interceptor';
 import { TemperatureModule } from './temperature/temperature.module';
 import { EventsBrokerModule } from './eventsBroker/eventsBroker.module';
 import { LightModule } from './Light/light.modulo';
+import { ScheduleModule } from '@nestjs/schedule';
+import { DynamicKeyModule } from './dynamicKey/dynamicKey.module';
 
 @Module({
   imports: [
     FirebaseModule,
     AuthModule,
     MongooseModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [
+        ConfigModule,
+        ScheduleModule.forRoot()
+      ],
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('MONGODB_CONNECTION'),
@@ -30,7 +35,8 @@ import { LightModule } from './Light/light.modulo';
     TemperatureModule,
     UsersModule,
     EventsBrokerModule, 
-    LightModule
+    LightModule,
+    DynamicKeyModule
   ],
   controllers: [AppController],
   providers: [
