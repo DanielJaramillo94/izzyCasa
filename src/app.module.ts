@@ -10,6 +10,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { NoContentInterceptor } from './interceptors/transform.interceptor';
 import { TemperatureModule } from './temperature/temperature.module';
 import { EventsBrokerModule } from './eventsBroker/eventsBroker.module';
+import { LightModule } from './Light/light.modulo';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { EventsBrokerModule } from './eventsBroker/eventsBroker.module';
     }),
     TemperatureModule,
     UsersModule,
-    EventsBrokerModule
+    EventsBrokerModule, 
+    LightModule
   ],
   controllers: [AppController],
   providers: [
