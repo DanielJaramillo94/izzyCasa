@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 export class Light {
   public id: string | null;
@@ -7,7 +7,7 @@ export class Light {
   @IsNotEmpty()
   public location: string;
 
-  @IsInt()
+  @IsBoolean()
   @IsNotEmpty()
   public status: boolean;
 }

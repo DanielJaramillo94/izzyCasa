@@ -19,6 +19,10 @@ export class LightRepository {
     return await this.lightModel.findById(id).exec();
   }
 
+  async getByLocation(location:string): Promise<LightEntity | null>{
+    return await this.lightModel.find({location:location}).findOne();
+  }
+
   async save(light: Light): Promise<LightEntity> {
     const createdLight = new this.lightModel(light);
     return await createdLight.save();

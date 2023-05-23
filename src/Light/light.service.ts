@@ -5,11 +5,13 @@ import { Injectable } from '@nestjs/common';
 import { LightEntity } from './light.entity';
 import { QueryInconsistency } from '../exceptions/query-inconsistency';
 import { BussisnessException } from './../exceptions/bussisness-exception.class';
+import { EventsBrokerService } from 'src/eventsBroker/eventsBroker.service';
 import { get } from 'http';
 import { StringUtils } from './../utils/strings/string.utils';
 @Injectable()
 export class LightService {
-  constructor(private lightRepository: LightRepository
+  constructor(private lightRepository: LightRepository,
+    private eventsBroker: EventsBrokerService
     ) {
   }
 
@@ -35,23 +37,31 @@ export class LightService {
 
   async update(newLight: Light): Promise<Light | null> {
 
-    if (!newLight.id) {
+    if (!newLight.location) {
       throw this._throwMissingIdException();
     }
 
-    const light= await this.get(newLight.id);
+    const light= await this.getByLocation(newLight.location);
 
     if (!light) {
       throw this._throwMissingIdException();
     }
 
-    const updatedProduct = await this.lightRepository.update(newLight);
+    light.status = newLight.status;
+
+    const updatedProduct = await this.lightRepository.update(light);
 
     if (!updatedProduct) {
       throw this._throwMissingIdException();
     }
+
+    this.eventsBroker.publishMessage("light/" + light.location.toLowerCase(), light.status ? "ON" : "OFF");
     
     return LightBuilder.convertToBusiness(updatedProduct);
+  }
+
+  async getByLocation(location: string): Promise<Light | null> {
+    return this.lightRepository.getByLocation(location);
   }
 
   private _throwMissingIdException() {

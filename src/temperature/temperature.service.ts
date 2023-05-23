@@ -32,7 +32,7 @@ export class TemperatureService {
     const temperature = new Temperature();
     temperature.temperature = parseInt(message);
     temperature.location = topic.split("/")[1];
-    temperature.time = new Date().getMilliseconds();
+    temperature.time = new Date().getTime();
     this.create(temperature);
   }
 }

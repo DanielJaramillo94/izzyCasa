@@ -11,7 +11,7 @@ export class  EventsBrokerService{
   }
 
   private connectToBroker() {
-    this.client = mqtt.connect('mqtt://172.17.229.150'); // Reemplaza broker.example.com con la dirección de tu broker MQTT
+    this.client = mqtt.connect('mqtt://192.168.1.3'); // Reemplaza broker.example.com con la dirección de tu broker MQTT
 
     this.client.on('connect', () => {
       console.log('Conexión exitosa al broker MQTT  ');
