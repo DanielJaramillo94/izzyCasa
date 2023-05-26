@@ -10,7 +10,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { NoContentInterceptor } from './interceptors/transform.interceptor';
 import { TemperatureModule } from './temperature/temperature.module';
 import { EventsBrokerModule } from './eventsBroker/eventsBroker.module';
-import { LightModule } from './Light/light.modulo';
+import { LightModule } from './lights/light.modulo';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DynamicKeyModule } from './dynamicKey/dynamicKey.module';
 

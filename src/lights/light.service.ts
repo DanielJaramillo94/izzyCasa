@@ -4,9 +4,9 @@ import { Light } from './light';
 import { Injectable } from '@nestjs/common';
 import { LightEntity } from './light.entity';
 import { QueryInconsistency } from '../exceptions/query-inconsistency';
-import { BussisnessException } from './../exceptions/bussisness-exception.class';
+import { BussisnessException } from '../exceptions/bussisness-exception.class';
 import { EventsBrokerService } from 'src/eventsBroker/eventsBroker.service';
-import { StringUtils } from './../utils/strings/string.utils';
+import { StringUtils } from '../utils/strings/string.utils';
 @Injectable()
 export class LightService {
   constructor(
