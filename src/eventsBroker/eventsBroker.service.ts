@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import * as mqtt from 'mqtt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class  EventsBrokerService{
   private client: mqtt.MqttClient;
 
-  constructor() {
+  constructor(private readonly config: ConfigService) {
     console.log("Se instancia");
     this.connectToBroker();
   }
 
   private connectToBroker() {
-    this.client = mqtt.connect('mqtt://192.168.1.3'); // Reemplaza broker.example.com con la dirección de tu broker MQTT
+    this.client = mqtt.connect(this.config.get<string>('IP_BROKER') as string); // Reemplaza broker.example.com con la dirección de tu broker MQTT
 
     this.client.on('connect', () => {
       console.log('Conexión exitosa al broker MQTT  ');
