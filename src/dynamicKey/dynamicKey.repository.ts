@@ -15,7 +15,7 @@ export class DynamicKeyRepository {
     return await this.dynamicKeyModel.find().exec();
   }
 
-  async get(id:string): Promise<DynamicKeyEntity | null>{
+  async get(id: string): Promise<DynamicKeyEntity | null> {
     return await this.dynamicKeyModel.findById(id).exec();
   }
 
@@ -25,9 +25,13 @@ export class DynamicKeyRepository {
   }
 
   async update(dynamicKey: DynamicKey): Promise<DynamicKeyEntity> {
-    return await this.dynamicKeyModel.findByIdAndUpdate(dynamicKey.id, dynamicKey, {
-      new: true,
-      upsert: true,
-    });
+    return await this.dynamicKeyModel.findByIdAndUpdate(
+      dynamicKey.id,
+      dynamicKey,
+      {
+        new: true,
+        upsert: true,
+      },
+    );
   }
 }

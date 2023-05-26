@@ -15,7 +15,7 @@ import { EventsBrokerModule } from 'src/eventsBroker/eventsBroker.module';
       { name: TemperatureEntity.name, schema: TemperatureSchema },
     ]),
     FirebaseModule,
-    EventsBrokerModule
+    EventsBrokerModule,
   ],
   providers: [TemperatureService, TemperatureRepository],
   controllers: [TemperatureController],

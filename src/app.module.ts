@@ -19,10 +19,7 @@ import { DynamicKeyModule } from './dynamicKey/dynamicKey.module';
     FirebaseModule,
     AuthModule,
     MongooseModule.forRootAsync({
-      imports: [
-        ConfigModule,
-        ScheduleModule.forRoot()
-      ],
+      imports: [ConfigModule, ScheduleModule.forRoot()],
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('MONGODB_CONNECTION'),
@@ -34,9 +31,9 @@ import { DynamicKeyModule } from './dynamicKey/dynamicKey.module';
     }),
     TemperatureModule,
     UsersModule,
-    EventsBrokerModule, 
+    EventsBrokerModule,
     LightModule,
-    DynamicKeyModule
+    DynamicKeyModule,
   ],
   controllers: [AppController],
   providers: [

@@ -1,4 +1,4 @@
-import { IsBoolean, IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty } from 'class-validator';
 
 export class DynamicKey {
   public id: string | null;

@@ -19,5 +19,4 @@ export class LightEntity {
   status: boolean;
 }
 
-export const LightSchema =
-  SchemaFactory.createForClass(LightEntity);
+export const LightSchema = SchemaFactory.createForClass(LightEntity);

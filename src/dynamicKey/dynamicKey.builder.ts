@@ -1,4 +1,4 @@
-import { DynamicKey } from './dynamicKey'; 
+import { DynamicKey } from './dynamicKey';
 import { DynamicKeyEntity } from './dynamicKey.entity';
 
 export class DynamicKeyBuilder {

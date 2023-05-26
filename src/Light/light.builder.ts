@@ -1,5 +1,5 @@
-import { Light } from './light'; 
-import { LightEntity } from './light.entity'; 
+import { Light } from './light';
+import { LightEntity } from './light.entity';
 
 export class LightBuilder {
   static convertToBusiness(lightEntity: LightEntity): Light {

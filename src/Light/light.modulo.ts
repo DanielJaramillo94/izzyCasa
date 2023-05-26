@@ -15,7 +15,7 @@ import { EventsBrokerModule } from 'src/eventsBroker/eventsBroker.module';
       { name: LightEntity.name, schema: LightSchema },
     ]),
     FirebaseModule,
-    EventsBrokerModule
+    EventsBrokerModule,
   ],
   providers: [LightService, LightRepository],
   controllers: [LightController],

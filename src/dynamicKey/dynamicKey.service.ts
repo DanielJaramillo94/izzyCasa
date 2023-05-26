@@ -1,6 +1,5 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { get } from 'http';
 import { DynamicKey } from './dynamicKey';
 import { DynamicKeyRepository } from './dynamicKey.repository';
 import { DynamicKeyEntity } from './dynamicKey.entity';
@@ -11,32 +10,27 @@ import { StringUtils } from './../utils/strings/string.utils';
 
 @Injectable()
 export class DynamicKeyService {
-  constructor(private dynamicKeyRepository: DynamicKeyRepository
-    ) {}
-
-  private readonly logger = new Logger(DynamicKeyService.name);
+  constructor(private dynamicKeyRepository: DynamicKeyRepository) {}
 
   @Cron(CronExpression.EVERY_30_SECONDS)
   async manageDynamicKey() {
-
-    let code = this.generateDynamicKey();
+    const code = this.generateDynamicKey();
     const dynamicKey = new DynamicKey();
     dynamicKey.code = code;
     dynamicKey.time = new Date().getTime();
-    let dynamicKeys = await this.getAll();
+    const dynamicKeys = await this.getAll();
 
-    if (dynamicKeys.length == 0){
+    if (dynamicKeys.length == 0) {
       this.create(dynamicKey);
-    }
-    else{
+    } else {
       dynamicKey.id = dynamicKeys[0].id;
       this.update(dynamicKey);
     }
   }
 
   generateDynamicKey() {
-    var minm = 100000;
-    var maxm = 999999;
+    const minm = 100000;
+    const maxm = 999999;
     return Math.floor(Math.random() * (maxm - minm + 1)) + minm;
   }
 
@@ -53,23 +47,24 @@ export class DynamicKeyService {
   }
 
   async update(newDynamicKey: DynamicKey): Promise<DynamicKey | null> {
-
     if (!newDynamicKey.id) {
       throw this._throwMissingIdException();
     }
 
-    const dynamicKey= await this.get(newDynamicKey.id);
+    const dynamicKey = await this.get(newDynamicKey.id);
 
     if (!dynamicKey) {
       throw this._throwMissingIdException();
     }
 
-    const updatedProduct = await this.dynamicKeyRepository.update(newDynamicKey);
+    const updatedProduct = await this.dynamicKeyRepository.update(
+      newDynamicKey,
+    );
 
     if (!updatedProduct) {
       throw this._throwMissingIdException();
     }
-    
+
     return DynamicKeyBuilder.convertToBusiness(updatedProduct);
   }
 
@@ -88,5 +83,4 @@ export class DynamicKeyService {
       ),
     );
   }
-
 }

@@ -4,10 +4,7 @@ import { UsersModule } from 'src/users/users.module';
 import { EventsBrokerService } from './eventsBroker.service';
 
 @Module({
-  imports: [
-    UsersModule,
-    FirebaseModule,
-  ],
+  imports: [UsersModule, FirebaseModule],
   providers: [EventsBrokerService],
   exports: [EventsBrokerService],
 })

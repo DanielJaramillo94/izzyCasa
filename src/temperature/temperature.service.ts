@@ -4,14 +4,16 @@ import { Temperature } from './temperature';
 import { Injectable } from '@nestjs/common';
 import { TemperatureEntity } from './temperature.entity';
 import { EventsBrokerService } from 'src/eventsBroker/eventsBroker.service';
-import { get } from 'http';
 @Injectable()
 export class TemperatureService {
-  constructor(private temperatureRepository: TemperatureRepository,
-    private readonly eventsBrokerService: EventsBrokerService
-    ) {
-    let sus = this.eventsBrokerService.subscribeToTopic(["temperature/livingroom"]);
-    sus.on('message', (topic, message) => {
+  constructor(
+    private temperatureRepository: TemperatureRepository,
+    private readonly eventsBrokerService: EventsBrokerService,
+  ) {
+    const suscription = this.eventsBrokerService.subscribeToTopic([
+      'temperature/livingroom',
+    ]);
+    suscription.on('message', (topic, message) => {
       this.getTemperature(topic, message.toString());
     });
   }
@@ -28,10 +30,10 @@ export class TemperatureService {
     return TemperatureBuilder.convertToBusiness(newTemperature);
   }
 
-  async getTemperature(topic:string, message:string){
+  async getTemperature(topic: string, message: string) {
     const temperature = new Temperature();
     temperature.temperature = parseInt(message);
-    temperature.location = topic.split("/")[1];
+    temperature.location = topic.split('/')[1];
     temperature.time = new Date().getTime();
     this.create(temperature);
   }

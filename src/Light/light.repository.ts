@@ -15,12 +15,12 @@ export class LightRepository {
     return await this.lightModel.find().exec();
   }
 
-  async get(id:string): Promise<LightEntity | null>{
+  async get(id: string): Promise<LightEntity | null> {
     return await this.lightModel.findById(id).exec();
   }
 
-  async getByLocation(location:string): Promise<LightEntity | null>{
-    return await this.lightModel.find({location:location}).findOne();
+  async getByLocation(location: string): Promise<LightEntity | null> {
+    return await this.lightModel.find({ location: location }).findOne();
   }
 
   async save(light: Light): Promise<LightEntity> {

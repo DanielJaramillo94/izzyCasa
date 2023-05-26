@@ -19,5 +19,4 @@ export class DynamicKeyEntity {
   time: number;
 }
 
-export const DynamicKeySchema =
-  SchemaFactory.createForClass(DynamicKeyEntity);
+export const DynamicKeySchema = SchemaFactory.createForClass(DynamicKeyEntity);

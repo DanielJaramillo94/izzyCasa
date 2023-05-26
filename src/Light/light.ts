@@ -1,4 +1,4 @@
-import { IsBoolean, IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 export class Light {
   public id: string | null;

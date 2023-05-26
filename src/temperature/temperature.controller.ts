@@ -8,9 +8,10 @@ import { EventsBrokerService } from 'src/eventsBroker/eventsBroker.service';
 @Controller('temperature')
 @UseGuards(JwtAuthGuard)
 export class TemperatureController {
-  constructor(private readonly temperatureService: TemperatureService, 
-    private readonly eventsBrokerService: EventsBrokerService 
-    ) {}
+  constructor(
+    private readonly temperatureService: TemperatureService,
+    private readonly eventsBrokerService: EventsBrokerService,
+  ) {}
 
   @Get()
   async getAll() {

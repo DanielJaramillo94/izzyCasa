@@ -6,19 +6,17 @@ import { LightEntity } from './light.entity';
 import { QueryInconsistency } from '../exceptions/query-inconsistency';
 import { BussisnessException } from './../exceptions/bussisness-exception.class';
 import { EventsBrokerService } from 'src/eventsBroker/eventsBroker.service';
-import { get } from 'http';
 import { StringUtils } from './../utils/strings/string.utils';
 @Injectable()
 export class LightService {
-  constructor(private lightRepository: LightRepository,
-    private eventsBroker: EventsBrokerService
-    ) {
-  }
+  constructor(
+    private lightRepository: LightRepository,
+    private eventsBroker: EventsBrokerService,
+  ) {}
 
   async getAll(): Promise<Light[]> {
     return (await this.lightRepository.getAll()).map(
-      (LightEntity: LightEntity) =>
-        LightBuilder.convertToBusiness(LightEntity),
+      (LightEntity: LightEntity) => LightBuilder.convertToBusiness(LightEntity),
     );
   }
 
@@ -36,12 +34,11 @@ export class LightService {
   }
 
   async update(newLight: Light): Promise<Light | null> {
-
     if (!newLight.location) {
       throw this._throwMissingIdException();
     }
 
-    const light= await this.getByLocation(newLight.location);
+    const light = await this.getByLocation(newLight.location);
 
     if (!light) {
       throw this._throwMissingIdException();
@@ -55,8 +52,11 @@ export class LightService {
       throw this._throwMissingIdException();
     }
 
-    this.eventsBroker.publishMessage("light/" + light.location.toLowerCase(), light.status ? "ON" : "OFF");
-    
+    this.eventsBroker.publishMessage(
+      'light/' + light.location.toLowerCase(),
+      light.status ? 'ON' : 'OFF',
+    );
+
     return LightBuilder.convertToBusiness(updatedProduct);
   }
 
@@ -71,6 +71,4 @@ export class LightService {
       ),
     );
   }
-  
-
 }
