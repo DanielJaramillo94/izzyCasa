@@ -3,10 +3,9 @@ import { LightRepository } from './light.repository';
 import { Light } from './light';
 import { Injectable } from '@nestjs/common';
 import { LightEntity } from './light.entity';
-import { QueryInconsistency } from '../exceptions/query-inconsistency';
 import { BussisnessException } from '../exceptions/bussisness-exception.class';
 import { EventsBrokerService } from 'src/eventsBroker/eventsBroker.service';
-import { StringUtils } from '../utils/strings/string.utils';
+import { LightsInconsistency } from 'src/exceptions/lights-inconsistency';
 @Injectable()
 export class LightService {
   constructor(
@@ -20,55 +19,29 @@ export class LightService {
     );
   }
 
-  async create(light: Light): Promise<Light | undefined> {
-    const newTemperature = await this.lightRepository.save(light);
-    return LightBuilder.convertToBusiness(newTemperature);
-  }
-
-  async get(lightId: string): Promise<Light | null> {
-    const light = await this.lightRepository.get(lightId);
-    if (light == null) {
-      return null;
-    }
-    return LightBuilder.convertToBusiness(light);
-  }
-
-  async update(newLight: Light): Promise<Light | null> {
-    if (!newLight.location) {
-      throw this._throwMissingIdException();
+  async changeState(location: string, status: boolean) {
+    if (status === null || status === undefined) {
+      //TODO: make this validation in controller, using a validator pipe
+      throw new BussisnessException(LightsInconsistency.missingNewStatus());
     }
 
-    const light = await this.getByLocation(newLight.location);
+    const light = await this.getByLocation(location);
 
     if (!light) {
-      throw this._throwMissingIdException();
+      throw new BussisnessException(LightsInconsistency.missingLocation());
     }
 
-    light.status = newLight.status;
-
-    const updatedProduct = await this.lightRepository.update(light);
-
-    if (!updatedProduct) {
-      throw this._throwMissingIdException();
-    }
-
+    light.status = status;
+    const updatedLight = await this.lightRepository.update(light);
     this.eventsBroker.publishMessage(
-      'light/' + light.location.toLowerCase(),
-      light.status ? 'ON' : 'OFF',
+      'lights/' + light.location.toLowerCase(),
+      light.status ? '1' : '0',
     );
 
-    return LightBuilder.convertToBusiness(updatedProduct);
+    return LightBuilder.convertToBusiness(updatedLight);
   }
 
   async getByLocation(location: string): Promise<Light | null> {
     return this.lightRepository.getByLocation(location);
-  }
-
-  private _throwMissingIdException() {
-    return new BussisnessException(
-      QueryInconsistency.missingId(
-        StringUtils.toHumanString(Light.constructor.name),
-      ),
-    );
   }
 }

@@ -1,5 +1,4 @@
-import { Light } from './light';
-import { Controller, Get, Post, Body, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query } from '@nestjs/common';
 import { LightService } from './light.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common/decorators';
@@ -14,13 +13,11 @@ export class LightController {
     return await this.lightService.getAll();
   }
 
-  @Post()
-  create(@Body() light: Light) {
-    return this.lightService.create(light);
-  }
-
-  @Patch()
-  update(@Body() light: Light) {
-    return this.lightService.update(light);
+  @Post('/:location')
+  changeState(
+    @Param('location') location: string,
+    @Query('status') status: boolean,
+  ) {
+    return this.lightService.changeState(location, status);
   }
 }
