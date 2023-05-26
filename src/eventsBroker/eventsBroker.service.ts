@@ -12,7 +12,7 @@ export class EventsBrokerService {
 
   private connectToBroker() {
     this.client = mqtt.connect(
-      this.configService.get<string>('IP_BROKER') as string,
+      ('mqtt://' + this.configService.get<string>('IP_BROKER')) as string,
     );
 
     this.client.on('connect', () => {
