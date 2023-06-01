@@ -13,6 +13,7 @@ import { EventsBrokerModule } from './eventsBroker/eventsBroker.module';
 import { LightModule } from './lights/light.modulo';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DynamicKeyModule } from './dynamicKey/dynamicKey.module';
+import { MainDoorModule } from './mainDoor/mainDoor.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { DynamicKeyModule } from './dynamicKey/dynamicKey.module';
     EventsBrokerModule,
     LightModule,
     DynamicKeyModule,
+    MainDoorModule
   ],
   controllers: [AppController],
   providers: [
