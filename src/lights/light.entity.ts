@@ -12,6 +12,9 @@ export class LightEntity {
   @Prop({ required: true })
   location: string;
 
+  @Prop({ required: true })
+  label: string;
+
   @Prop({
     required: true,
     type: Boolean,

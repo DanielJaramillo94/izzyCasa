@@ -6,6 +6,7 @@ export class LightBuilder {
     const light = new Light();
     light.id = lightEntity.id;
     light.location = lightEntity.location;
+    light.label = lightEntity.label;
     light.status = lightEntity.status;
     return light;
   }

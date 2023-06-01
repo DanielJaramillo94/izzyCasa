@@ -7,6 +7,10 @@ export class Light {
   @IsNotEmpty()
   public location: string;
 
+  @IsString()
+  @IsNotEmpty()
+  public label: string;
+
   @IsBoolean()
   @IsNotEmpty()
   public status: boolean;
